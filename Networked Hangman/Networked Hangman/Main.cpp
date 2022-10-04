@@ -8,6 +8,7 @@ using namespace std;
 int userPort;
 string connectIP;
 string userName;
+string tempString;
 
 int main()
 {
@@ -46,16 +47,21 @@ int main()
 
 	while (true)
 	{
+		cin.ignore();
+		getline(cin, tempString);
 
-		cin >> sendString;
-		cout << "Sent: " << sendString << endl;
-
-		sendString = userName + ": " + sendString;
+		cout << "Sent: " << tempString << endl;
 
 		if (sendString == "Q" || sendString == "q")
 		{
 			break;
 		}
+
+		sendString.append(userName);
+		sendString.append(": ");
+		sendString.append(tempString);
+
+		cout << sendString << endl;
 
 		NetworkInst->SendData(sendString.c_str());
 
@@ -67,6 +73,7 @@ int main()
 		}
 
 
+		tempString = "";
 		sendString = "";
 	}
 
