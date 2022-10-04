@@ -78,10 +78,13 @@ int main()
 
 void ListenForMessage(NetworkManager* net)
 {
-	int rcvSize = net->ReceiveData(recString);
-
-	if (rcvSize > 0)
+	while (true)
 	{
-		cout << recString << endl;
+		int rcvSize = net->ReceiveData(recString);
+
+		if (rcvSize > 0)
+		{
+			cout << recString << endl;
+		}
 	}
 }
