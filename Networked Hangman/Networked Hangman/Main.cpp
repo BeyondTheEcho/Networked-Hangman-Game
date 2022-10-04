@@ -31,19 +31,28 @@ int main()
 	NetworkInst->BindUDP();
 	NetworkInst->SetRemoteData(userPort, connectIP);
 
-	cin.clear();
-
-	cout << "Type Q To Quit OR Type A Message To Send: " << endl;
-	cin >> sendString;
-
-	NetworkInst->SendData(sendString.c_str());
-
-	int rcvSize = NetworkInst->ReceiveData(recString);
-
-	if (rcvSize > 0)
+	while (true)
 	{
-		cout << "Received: " << recString << endl;
+		cout << "Type Q To Quit OR Type A Message To Send: " << endl;
+		cin >> sendString;
+
+		if (sendString == "Q" || sendString == "q")
+		{
+			break;
+		}
+
+		NetworkInst->SendData(sendString.c_str());
+
+		int rcvSize = NetworkInst->ReceiveData(recString);
+
+		if (rcvSize > 0)
+		{
+			cout << "Received: " << recString << endl;
+		}
+
+		sendString = "";
 	}
+
 
 	NetworkInst->Shutdown();
 	return 0;
