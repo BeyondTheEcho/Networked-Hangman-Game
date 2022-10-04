@@ -35,7 +35,7 @@ int main()
 	cout << "Type Q To Quit OR Type A Message To Send: " << endl;
 	while (true)
 	{
-		if (_kbhit())
+		if (!_kbhit())
 		{
 			cin >> sendString;
 
