@@ -46,30 +46,26 @@ int main()
 
 	while (true)
 	{
-		if (!_kbhit())
+
+		cin >> sendString;
+		cout << "Sent: " << sendString << endl;
+
+		sendString = userName + ": " + sendString;
+
+		if (sendString == "Q" || sendString == "q")
 		{
-			cin >> sendString;
-			cout << "Sent: " << sendString << endl;
-
-			sendString = userName + ": " + sendString;
-
-			if (sendString == "Q" || sendString == "q")
-			{
-				break;
-			}
-
-			NetworkInst->SendData(sendString.c_str());
+			break;
 		}
-		else 
+
+		NetworkInst->SendData(sendString.c_str());
+
+		int rcvSize = NetworkInst->ReceiveData(recString);
+
+		if (rcvSize > 0)
 		{
-			int rcvSize = NetworkInst->ReceiveData(recString);
-
-			if (rcvSize > 0)
-			{
-				cout << recString << endl;
-			}
-
+			cout << recString << endl;
 		}
+
 
 		sendString = "";
 	}
