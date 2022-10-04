@@ -44,6 +44,7 @@ int main()
 	NetworkInst->SetRemoteData(userPort, connectIP);
 
 	auto listenThread = thread(ListenForMessage, NetworkInst);
+	listenThread.detach();
 
 	cout << "Type Q To Quit OR Type A Message To Send: " << endl;
 
