@@ -13,7 +13,10 @@ string tempString;
 string sendString;
 char* recString = new char[65543];
 
+bool isThreadRunning = true;
+
 void ListenForMessage(NetworkManager* net);
+void ShutdownApplication(NetworkManager* net, thread& netThread);
 
 int main()
 {
@@ -43,8 +46,7 @@ int main()
 	NetworkInst->BindUDP();
 	NetworkInst->SetRemoteData(userPort, connectIP);
 
-	auto listenThread = thread(ListenForMessage, NetworkInst);
-	listenThread.detach();
+	thread listenThread = thread(ListenForMessage, NetworkInst);
 
 	cout << "Type Q To Quit OR Type A Message To Send: " << endl;
 
@@ -57,7 +59,7 @@ int main()
 
 		getline(cin, tempString);
 
-		if (sendString == "Q" || sendString == "q")
+		if (tempString == "Q" || tempString == "q")
 		{
 			break;
 		}
@@ -72,13 +74,13 @@ int main()
 	}
 
 
-	NetworkInst->Shutdown();
+	ShutdownApplication(NetworkInst, listenThread);
 	return 0;
 }
 
 void ListenForMessage(NetworkManager* net)
 {
-	while (true)
+	while (isThreadRunning)
 	{
 		int rcvSize = net->ReceiveData(recString);
 
@@ -87,4 +89,11 @@ void ListenForMessage(NetworkManager* net)
 			cout << recString << endl;
 		}
 	}
+}
+
+void ShutdownApplication(NetworkManager* net, thread& netThread)
+{
+	isThreadRunning = false;
+	netThread.join();
+	net->Shutdown();
 }

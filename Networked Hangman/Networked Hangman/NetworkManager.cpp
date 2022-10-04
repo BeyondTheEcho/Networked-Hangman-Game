@@ -61,7 +61,11 @@ void NetworkManager::Shutdown()
 
 void NetworkManager::CreateUDPSockets()
 {
+	u_long isBlocking = 1;
+
 	UDPSocketIn = socket(AF_INET, SOCK_DGRAM, 0);
+
+	ioctlsocket(UDPSocketIn, FIONBIO, &isBlocking);
 	
 	if (UDPSocketIn == INVALID_SOCKET)
 	{
@@ -129,7 +133,7 @@ int NetworkManager::ReceiveData(char* ReceiveBuffer)
 	BytesReceived = recvfrom(UDPSocketIn, ReceiveBuffer, 65535, 0,
 		reinterpret_cast<SOCKADDR*>(&inAddr), &inAddrSize);
 
-	if (BytesReceived == SOCKET_ERROR)
+	if (BytesReceived == WSAEWOULDBLOCK)
 	{
 		Shutdown();
 	}
