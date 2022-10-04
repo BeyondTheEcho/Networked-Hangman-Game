@@ -32,25 +32,25 @@ int main()
 	NetworkInst->BindUDP();
 	NetworkInst->SetRemoteData(userPort, connectIP);
 
+	cout << "Type Q To Quit OR Type A Message To Send: " << endl;
 	while (true)
 	{
-		if (!_kbhit())
+		if (_kbhit())
+		{
+			cin >> sendString;
+
+			if (sendString == "Q" || sendString == "q")
+			{
+				break;
+			}
+		}
+		else 
 		{
 			int rcvSize = NetworkManager::GetInstance()->ReceiveData(recString);
 
 			if (rcvSize > 0)
 			{
 				cout << " user : " << recString << endl;
-			}
-		}
-		else 
-		{
-			cout << "Type Q To Quit OR Type A Message To Send: " << endl;
-			cin >> sendString;
-
-			if (sendString == "Q" || sendString == "q")
-			{
-				break;
 			}
 
 		}
