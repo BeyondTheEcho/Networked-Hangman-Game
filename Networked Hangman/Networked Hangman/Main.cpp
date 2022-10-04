@@ -1,6 +1,7 @@
 #include <string>
 #include "iostream"
 #include "NetworkManager.h"
+#include <conio.h>
 
 using namespace std;
 
@@ -33,21 +34,25 @@ int main()
 
 	while (true)
 	{
-		cout << "Type Q To Quit OR Type A Message To Send: " << endl;
-		cin >> sendString;
-
-		if (sendString == "Q" || sendString == "q")
+		if (!_kbhit())
 		{
-			break;
+			int rcvSize = NetworkManager::GetInstance()->ReceiveData(recString);
+
+			if (rcvSize > 0)
+			{
+				cout << " user : " << recString << endl;
+			}
 		}
-
-		NetworkInst->SendData(sendString.c_str());
-
-		int rcvSize = NetworkInst->ReceiveData(recString);
-
-		if (rcvSize > 0)
+		else 
 		{
-			cout << "Received: " << recString << endl;
+			cout << "Type Q To Quit OR Type A Message To Send: " << endl;
+			cin >> sendString;
+
+			if (sendString == "Q" || sendString == "q")
+			{
+				break;
+			}
+
 		}
 
 		sendString = "";
