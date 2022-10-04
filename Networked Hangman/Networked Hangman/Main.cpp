@@ -56,8 +56,6 @@ int main()
 
 		getline(cin, tempString);
 
-		cout << "Sent: " << tempString << endl;
-
 		if (sendString == "Q" || sendString == "q")
 		{
 			break;
