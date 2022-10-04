@@ -18,11 +18,17 @@ int main()
 	char* recString = new char[65543];
 	recString[0] = '\0';
 
+	cout << "=================" << endl;
+	cout << "SKYNET SERVICES" << endl;
+	cout << "=================" << endl << endl;
+
 	cout << "Enter a port to connect on" << endl;
 	cin >> userPort;
 
 	cout << endl << "Enter an IP Address to connect to" << endl;
 	cin >> connectIP;
+
+	cout << "=================" << endl;
 
 	NetworkManager* NetworkInst = NetworkManager::GetInstance();
 
@@ -33,11 +39,13 @@ int main()
 	NetworkInst->SetRemoteData(userPort, connectIP);
 
 	cout << "Type Q To Quit OR Type A Message To Send: " << endl;
+
 	while (true)
 	{
 		if (!_kbhit())
 		{
 			cin >> sendString;
+			cout << "Sent: " << sendString << endl;
 
 			if (sendString == "Q" || sendString == "q")
 			{
@@ -50,7 +58,7 @@ int main()
 
 			if (rcvSize > 0)
 			{
-				cout << " user : " << recString << endl;
+				cout << "Received: " << recString << endl;
 			}
 
 		}
