@@ -34,7 +34,7 @@ int main()
 	cin.clear();
 
 	cout << "Type Q To Quit OR Type A Message To Send: " << endl;
-	getline(cin, sendString);
+	cin >> sendString;
 
 	NetworkInst->SendData(sendString.c_str());
 
