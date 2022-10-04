@@ -47,12 +47,13 @@ int main()
 
 	cout << "Type Q To Quit OR Type A Message To Send: " << endl;
 
+	cin.ignore();
+
 	while (true)
 	{
 		tempString = "";
 		sendString = "";
 
-		cin.ignore();
 		getline(cin, tempString);
 
 		cout << "Sent: " << tempString << endl;
