@@ -7,6 +7,7 @@ using namespace std;
 
 int userPort;
 string connectIP;
+string userName;
 
 int main()
 {
@@ -21,6 +22,9 @@ int main()
 	cout << "=================" << endl;
 	cout << "SKYNET SERVICES" << endl;
 	cout << "=================" << endl << endl;
+
+	cout << "Enter your username" << endl;
+	cin >> userName;
 
 	cout << "Enter a port to connect on" << endl;
 	cin >> userPort;
@@ -47,18 +51,22 @@ int main()
 			cin >> sendString;
 			cout << "Sent: " << sendString << endl;
 
+			sendString = userName + ": " + sendString;
+
 			if (sendString == "Q" || sendString == "q")
 			{
 				break;
 			}
+
+			NetworkInst->SendData(sendString.c_str());
 		}
 		else 
 		{
-			int rcvSize = NetworkManager::GetInstance()->ReceiveData(recString);
+			int rcvSize = NetworkInst->ReceiveData(recString);
 
 			if (rcvSize > 0)
 			{
-				cout << "Received: " << recString << endl;
+				cout << recString << endl;
 			}
 
 		}
