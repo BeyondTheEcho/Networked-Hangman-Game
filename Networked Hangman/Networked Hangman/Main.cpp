@@ -2,6 +2,7 @@
 #include "iostream"
 #include "NetworkManager.h"
 #include <conio.h>
+#include <thread>
 
 using namespace std;
 
@@ -9,15 +10,14 @@ int userPort;
 string connectIP;
 string userName;
 string tempString;
+string sendString;
+char* recString = new char[65543];
+
+void ListenForMessage(NetworkManager* net);
 
 int main()
 {
-	//Send String Vars
-	string sendString;
 	sendString[0] = '\0';
-
-	//Rec String Vars
-	char* recString = new char[65543];
 	recString[0] = '\0';
 
 	cout << "=================" << endl;
@@ -43,10 +43,15 @@ int main()
 	NetworkInst->BindUDP();
 	NetworkInst->SetRemoteData(userPort, connectIP);
 
+	auto listenThread = thread(ListenForMessage, NetworkInst);
+
 	cout << "Type Q To Quit OR Type A Message To Send: " << endl;
 
 	while (true)
 	{
+		tempString = "";
+		sendString = "";
+
 		cin.ignore();
 		getline(cin, tempString);
 
@@ -64,20 +69,19 @@ int main()
 		cout << sendString << endl;
 
 		NetworkInst->SendData(sendString.c_str());
-
-		int rcvSize = NetworkInst->ReceiveData(recString);
-
-		if (rcvSize > 0)
-		{
-			cout << recString << endl;
-		}
-
-
-		tempString = "";
-		sendString = "";
 	}
 
 
 	NetworkInst->Shutdown();
 	return 0;
+}
+
+void ListenForMessage(NetworkManager* net)
+{
+	int rcvSize = net->ReceiveData(recString);
+
+	if (rcvSize > 0)
+	{
+		cout << recString << endl;
+	}
 }
