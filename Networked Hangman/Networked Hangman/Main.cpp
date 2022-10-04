@@ -31,8 +31,9 @@ int main()
 	NetworkInst->BindUDP();
 	NetworkInst->SetRemoteData(userPort, connectIP);
 
+	cin.clear();
+
 	cout << "Type Q To Quit OR Type A Message To Send: " << endl;
-	cin >> sendString;
 	getline(cin, sendString);
 
 	NetworkInst->SendData(sendString.c_str());
