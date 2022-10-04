@@ -32,6 +32,7 @@ int main()
 	NetworkInst->SetRemoteData(userPort, connectIP);
 
 	cout << "Type Q To Quit OR Type A Message To Send: " << endl;
+	cin >> sendString;
 	getline(cin, sendString);
 
 	NetworkInst->SendData(sendString.c_str());
