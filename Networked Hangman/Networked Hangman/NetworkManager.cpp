@@ -8,7 +8,7 @@ NetworkManager* NetworkManager::instance = nullptr;
 
 NetworkManager::NetworkManager()
 {
-
+	
 }
 
 NetworkManager::~NetworkManager()
@@ -99,13 +99,13 @@ void NetworkManager::BindUDP()
 	}
 }
 
-void NetworkManager::SetRemoteData()
+void NetworkManager::SetRemoteData(int port, string cxIP)
 {
 	outAddr.sin_family = AF_INET;
 
-	outAddr.sin_port = htons(8889);
+	outAddr.sin_port = htons(port);
 
-	inet_pton(AF_INET, "127.0.0.1", &outAddr.sin_addr);
+	inet_pton(AF_INET, cxIP.c_str(), &outAddr.sin_addr);
 }
 
 void NetworkManager::SendData(const char* data)

@@ -20,10 +20,10 @@ int remainingGuesses = maxGuesses;
 bool enableHelp = false;
 bool failedGuessToggle = true;
 
-int main()
-{
-    MainMenu();
-}
+//int main()
+//{
+//    MainMenu();
+//}
 
 void MainMenu()
 {
